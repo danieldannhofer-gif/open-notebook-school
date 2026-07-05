@@ -1,0 +1,10 @@
+-- Migration 16 Down: Remove Learning Materials tables
+-- This removes all the flashcard and quiz related tables
+
+REMOVE TABLE IF EXISTS quiz_answer;
+REMOVE TABLE IF EXISTS quiz_attempt;
+REMOVE TABLE IF EXISTS quiz_question;
+REMOVE TABLE IF EXISTS quiz;
+REMOVE TABLE IF EXISTS flashcard_review;
+REMOVE TABLE IF EXISTS flashcard;
+REMOVE TABLE IF EXISTS flashcard_deck;

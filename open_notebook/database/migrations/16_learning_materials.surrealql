@@ -1,0 +1,67 @@
+-- Migration 16: Learning Materials - Flashcard & Quiz Support
+-- This migration creates the foundation tables for flashcard decks, flashcards,
+-- flashcard reviews, quizzes, quiz questions, quiz attempts, and quiz answers.
+
+-- Flashcard Deck Table
+DEFINE TABLE IF NOT EXISTS flashcard_deck SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS name ON TABLE flashcard_deck TYPE string;
+DEFINE FIELD IF NOT EXISTS description ON TABLE flashcard_deck TYPE option<string> DEFAULT "";
+DEFINE FIELD IF NOT EXISTS notebook ON TABLE flashcard_deck TYPE record(notebook);
+DEFINE FIELD IF NOT EXISTS created ON TABLE flashcard_deck TYPE datetime;
+DEFINE FIELD IF NOT EXISTS updated ON TABLE flashcard_deck TYPE datetime;
+DEFINE FIELD IF NOT EXISTS tags ON TABLE flashcard_deck TYPE option<array<string>> DEFAULT [];
+
+-- Flashcard Table
+DEFINE TABLE IF NOT EXISTS flashcard SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS deck ON TABLE flashcard TYPE record(flashcard_deck);
+DEFINE FIELD IF NOT EXISTS question ON TABLE flashcard TYPE string;
+DEFINE FIELD IF NOT EXISTS answer ON TABLE flashcard TYPE string;
+DEFINE FIELD IF NOT EXISTS position ON TABLE flashcard TYPE option<int> DEFAULT 0;
+DEFINE FIELD IF NOT EXISTS quality_score ON TABLE flashcard TYPE option<float> DEFAULT 1.0;
+DEFINE FIELD IF NOT EXISTS is_approved ON TABLE flashcard TYPE option<bool> DEFAULT true;
+DEFINE FIELD IF NOT EXISTS created ON TABLE flashcard TYPE datetime;
+
+-- Flashcard Review Table
+DEFINE TABLE IF NOT EXISTS flashcard_review SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS flashcard ON TABLE flashcard_review TYPE record(flashcard);
+DEFINE FIELD IF NOT EXISTS user_token ON TABLE flashcard_review TYPE string;
+DEFINE FIELD IF NOT EXISTS is_correct ON TABLE flashcard_review TYPE bool;
+DEFINE FIELD IF NOT EXISTS reviewed_at ON TABLE flashcard_review TYPE datetime;
+
+-- Quiz Table
+DEFINE TABLE IF NOT EXISTS quiz SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS name ON TABLE quiz TYPE string;
+DEFINE FIELD IF NOT EXISTS description ON TABLE quiz TYPE option<string> DEFAULT "";
+DEFINE FIELD IF NOT EXISTS notebook ON TABLE quiz TYPE record(notebook);
+DEFINE FIELD IF NOT EXISTS created ON TABLE quiz TYPE datetime;
+DEFINE FIELD IF NOT EXISTS updated ON TABLE quiz TYPE datetime;
+
+-- Quiz Question Table
+DEFINE TABLE IF NOT EXISTS quiz_question SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS quiz ON TABLE quiz_question TYPE record(quiz);
+DEFINE FIELD IF NOT EXISTS question ON TABLE quiz_question TYPE string;
+DEFINE FIELD IF NOT EXISTS question_type ON TABLE quiz_question TYPE string;
+DEFINE FIELD IF NOT EXISTS options ON TABLE quiz_question TYPE option<array<string>> DEFAULT [];
+DEFINE FIELD IF NOT EXISTS correct_answer ON TABLE quiz_question TYPE string;
+DEFINE FIELD IF NOT EXISTS explanation ON TABLE quiz_question TYPE option<string> DEFAULT "";
+DEFINE FIELD IF NOT EXISTS points ON TABLE quiz_question TYPE option<int> DEFAULT 1;
+DEFINE FIELD IF NOT EXISTS position ON TABLE quiz_question TYPE option<int> DEFAULT 0;
+DEFINE FIELD IF NOT EXISTS quality_score ON TABLE quiz_question TYPE option<float> DEFAULT 1.0;
+DEFINE FIELD IF NOT EXISTS is_approved ON TABLE quiz_question TYPE option<bool> DEFAULT true;
+DEFINE FIELD IF NOT EXISTS created ON TABLE quiz_question TYPE datetime;
+
+-- Quiz Attempt Table
+DEFINE TABLE IF NOT EXISTS quiz_attempt SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS quiz ON TABLE quiz_attempt TYPE record(quiz);
+DEFINE FIELD IF NOT EXISTS user_token ON TABLE quiz_attempt TYPE string;
+DEFINE FIELD IF NOT EXISTS started_at ON TABLE quiz_attempt TYPE datetime;
+DEFINE FIELD IF NOT EXISTS completed_at ON TABLE quiz_attempt TYPE option<datetime>;
+DEFINE FIELD IF NOT EXISTS score ON TABLE quiz_attempt TYPE option<float>;
+
+-- Quiz Answer Table
+DEFINE TABLE IF NOT EXISTS quiz_answer SCHEMAFULL;
+DEFINE FIELD IF NOT EXISTS attempt ON TABLE quiz_answer TYPE record(quiz_attempt);
+DEFINE FIELD IF NOT EXISTS question ON TABLE quiz_answer TYPE record(quiz_question);
+DEFINE FIELD IF NOT EXISTS user_answer ON TABLE quiz_answer TYPE string;
+DEFINE FIELD IF NOT EXISTS is_correct ON TABLE quiz_answer TYPE bool;
+DEFINE FIELD IF NOT EXISTS reviewed ON TABLE quiz_answer TYPE option<bool> DEFAULT false;

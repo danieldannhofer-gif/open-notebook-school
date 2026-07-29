@@ -216,3 +216,21 @@ See dedicated CLAUDE.md files for detailed guidance:
 - **Issues**: https://github.com/lfnovo/open-notebook/issues
 - **License**: MIT (see LICENSE)
 
+---
+
+## Agent skills
+
+> **Experimental sandbox.** This fork exists to try out the engineering skills. All work stays on `danieldannhofer-gif/open-notebook-school`. **Never** file issues, open PRs, comment, or push to upstream `lfnovo/open-notebook` — the `upstream` remote has been removed on purpose; don't re-add it. (The "Issues" link in Support & Community above is inherited upstream text, not our work queue.)
+
+### Issue tracker
+
+GitHub Issues on this fork, `danieldannhofer-gif/open-notebook-school`, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical roles, each label string equal to its name. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+

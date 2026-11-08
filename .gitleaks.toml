@@ -1,0 +1,8 @@
+title = "gitleaks config"
+
+[allowlist]
+description = "Placeholders and previously scrubbed values"
+regexes = [
+  '''\*\*\*REMOVED\*\*\*''',
+  '''(?i)(your[-_ ]?api[-_ ]?key|changeme|placeholder|example|dummy|xxx+)''',
+]

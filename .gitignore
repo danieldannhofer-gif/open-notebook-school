@@ -142,3 +142,5 @@ specs/
 .harness/
 
 .mcp.json
+# local scratch/history files must never be committed
+history.txt
